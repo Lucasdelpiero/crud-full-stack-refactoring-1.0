@@ -35,7 +35,6 @@ function getTotalStudents($conn)
     return $result->fetch_assoc()['total'];
 }
 
-
 function getStudentById($conn, $id) 
 {
     $stmt = $conn->prepare("SELECT * FROM students WHERE id = ?");
