@@ -60,7 +60,7 @@ function setupCancelHandler()
         document.getElementById('studentId').value = '';
     });
 }
-
+  
 //2.0
 function setupPaginationControls() 
 {

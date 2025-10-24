@@ -12,12 +12,19 @@ import { studentsAPI } from '../api/studentsAPI.js';
 import { subjectsAPI } from '../api/subjectsAPI.js';
 import { studentsSubjectsAPI } from '../api/studentsSubjectsAPI.js';
 
+//2.0
+//For pagination:
+let currentPage = 1;
+let totalPages = 1;
+const limit = 5;
+
 document.addEventListener('DOMContentLoaded', () => 
 {
     initSelects();
     setupFormHandler();
     setupCancelHandler();
     loadRelations();
+    setupPaginationControls();//2.0
 });
 
 async function initSelects() 
@@ -90,6 +97,34 @@ function setupCancelHandler()
     });
 }
 
+//2.0
+function setupPaginationControls() 
+{
+    document.getElementById('prevPage').addEventListener('click', () => 
+    {
+        if (currentPage > 1) 
+        {
+            currentPage--;
+            loadStudentSubjects();
+        }
+    });
+
+    document.getElementById('nextPage').addEventListener('click', () => 
+    {
+        if (currentPage < totalPages) 
+        {
+            currentPage++;
+            loadStudentSubjects();
+        }
+    });
+
+    document.getElementById('resultsPerPage').addEventListener('change', e => 
+    {
+        currentPage = 1;
+        loadStudentSubjects();
+    });
+}
+
 function getFormData() 
 {
     return{
@@ -104,6 +139,24 @@ function clearForm()
 {
     document.getElementById('relationForm').reset();
     document.getElementById('relationId').value = '';
+}
+
+//2.0
+async function loadStudentSubjects()
+{
+    try 
+    {
+        const resPerPage = parseInt(document.getElementById('resultsPerPage').value, 10) || limit;
+        const data = await studentSubjectAPI.fetchPaginated(currentPage, resPerPage);
+        console.log(data);
+        renderStudentTable(data.studentSubjects);
+        totalPages = Math.ceil(data.total / resPerPage);
+        document.getElementById('pageInfo').textContent = `Página ${currentPage} de ${totalPages}`;
+    } 
+    catch (err) 
+    {
+        console.error('Error cargando materias de estudiantes:', err.message);
+    }
 }
 
 async function loadRelations() 
