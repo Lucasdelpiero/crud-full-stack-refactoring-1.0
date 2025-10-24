@@ -106,6 +106,8 @@ async function loadSubjects()
         renderSubjectTable(data.subjects);
         totalPages = Math.ceil(data.total / resPerPage);
         document.getElementById('pageInfo').textContent = `Página ${currentPage} de ${totalPages}`;
+        const subjects = await subjectsAPI.fetchAll();
+        renderSubjectTable(subjects);
     } 
     catch (err) 
     {
