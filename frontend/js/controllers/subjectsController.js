@@ -186,7 +186,3 @@ async function confirmDeleteSubject(id)
     }
 }
 
-async function validateNameSubject(subject) {
-    return await validateExistence("subjects",subject);
-}
-
