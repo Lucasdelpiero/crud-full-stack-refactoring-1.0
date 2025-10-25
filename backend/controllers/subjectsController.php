@@ -23,7 +23,7 @@ function handleGet($conn)
 
     else if ($input['row'] || $_GET['row']) {
         $subject = $input['row'] ?? $_GET['row'];
-        $existe = ValidateExistence($conn, $input['row']);
+        $existe = validateExistence($conn, $subject);
         echo json_encode($existe);
     }
 
