@@ -39,17 +39,16 @@ function setupSubjectFormHandler()
         try 
         {
             if (subject.id) 
-            {
-                const res = await ValidateNameSubject(subject.name);
-                const existsSubject = await res.json();
-                if(existsSubject)
-                    alert("El nombre de la materia ya existe en la base de datos");
-                else
-                    await subjectsAPI.update(subject);
+            {   
+                await subjectsAPI.update(subject);
             }
             else
             {
-                await subjectsAPI.create(subject);
+                const existsSubject = await validateNameSubject(subject.name);
+                if(existsSubject)
+                    alert("El nombre de la materia ya existe en la base de datos");
+                else
+                    await subjectsAPI.create(subject);
             }
             
             form.reset();
@@ -193,8 +192,7 @@ async function confirmDeleteSubject(id)
     }
 }
 
-async function ValidateNameSubject(materia) {
-    const res = await validateExistence(materia);
-    return res.json();
+async function validateNameSubject(subject) {
+    return await validateExistence("subjects",subject);
 }
 

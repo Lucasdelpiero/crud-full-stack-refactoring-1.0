@@ -21,8 +21,8 @@ function handleGet($conn)
         echo json_encode($subject);  
     } 
 
-    
-    else if(isset($input['row'])) {
+    else if ($input['row'] || $_GET['row']) {
+        $subject = $input['row'] ?? $_GET['row'];
         $existe = ValidateExistence($conn, $input['row']);
         echo json_encode($existe);
     }
