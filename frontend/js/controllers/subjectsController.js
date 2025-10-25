@@ -9,7 +9,7 @@
 */
 
 import { subjectsAPI } from '../api/subjectsAPI.js';
-import { functions } from './functions.js'
+import { validateExistence } from './functions.js'
 //2.1
 //For pagination:
 let currentPage = 1;
@@ -41,7 +41,8 @@ function setupSubjectFormHandler()
             if (subject.id) 
             {
                 const res = await ValidateNameSubject(subject.name);
-                if(!res.json)
+                const existsSubject = await res.json();
+                if(existsSubject)
                     alert("El nombre de la materia ya existe en la base de datos");
                 else
                     await subjectsAPI.update(subject);
@@ -193,7 +194,7 @@ async function confirmDeleteSubject(id)
 }
 
 async function ValidateNameSubject(materia) {
-    const res = await functions.validateExistence(materia);
+    const res = await validateExistence(materia);
     return res.json();
 }
 

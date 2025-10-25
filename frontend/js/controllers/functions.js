@@ -1,17 +1,12 @@
 
-export function functions() {
-    //const API_URL = `../../backend/server.php?module=${moduleName}`;
+export async function  validateExistence(row) {
+    
+    const url = `../../backend/server.php?module=${moduleName}&row=${row}`
 
-    return {
-        async validateExistence(row) {
+    const res = await fetch(url);
 
-            const url = `../../backend/server.php?module=${moduleName}&row=${row}`
-
-            const res = await fetch(url);
-
-            if(!res.ok) throw new Error(`Error en validacion`);
-            return await res.json(); 
-        }
-    }
+    if(!res.ok) throw new Error(`Error en validacion`);
+    
+    return await res.json(); 
 }
 
