@@ -76,15 +76,30 @@ function setupFormHandler()
             } 
             else 
             {
-                await studentsSubjectsAPI.create(relation);
-            }
+
+                const students = await studentsAPI.fetchAll();
+                const subjects = await subjectsAPI.fetchAll();
+
+                const alumnoExiste = students.some(s => s.id === relation.student_id);
+                const materiaExiste = subjects.some(sub => sub.id === relation.subject_id);
+
+
+                if (!alumnoExiste || !materiaExiste)
+                   await studentsSubjectsAPI.create(relation);
+                else {
+                    alert("ERROR ya existe la asignacion ");
+                    return ;
+                }
+
             clearForm();
             loadRelations();
-        } 
-        catch (err) 
-        {
-            console.error('Error guardando relación:', err.message);
-        }
+            } 
+        }   catch (err) {
+               const errorMsg = await err.response?.text?.() || err.message || 'Error desconocido';
+               alert(errorMsg);
+             console.error('Error guardando relación:', errorMsg);
+        }   
+
     });
 }
 

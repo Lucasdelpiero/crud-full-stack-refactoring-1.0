@@ -104,4 +104,17 @@ function removeStudentSubject($conn, $id)
 
     return ['deleted' => $stmt->affected_rows];
 }
+
+
+function Exsiste($conn, $student_id, $subject_id) {
+    $stmt = $conn->prepare("SELECT COUNT(*) AS total 
+                            FROM students_subjects 
+                            WHERE student_id = ? AND subject_id = ?");
+    $stmt->bind_param("ii", $student_id, $subject_id);
+    $stmt->execute();
+    $result = $stmt->get_result()->fetch_assoc();
+
+    return $result['total'] != 0;
+}
+
 ?>
