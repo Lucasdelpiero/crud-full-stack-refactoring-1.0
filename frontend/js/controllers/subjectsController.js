@@ -9,7 +9,6 @@
 */
 
 import { subjectsAPI } from '../api/subjectsAPI.js';
-
 //2.1
 //For pagination:
 let currentPage = 1;
@@ -35,18 +34,17 @@ function setupSubjectFormHandler()
             id: document.getElementById('subjectId').value.trim(),
             name: document.getElementById('name').value.trim()
         };
-
+        
         try 
         {
             if (subject.id) 
-            {
                 await subjectsAPI.update(subject);
+            else {
+                const json = await subjectsAPI.create(subject);
+                if(json.message === "El nombre de la materia ya existe")
+                    alert(json.message);
             }
-            else
-            {
-                await subjectsAPI.create(subject);
-            }
-            
+
             form.reset();
             document.getElementById('subjectId').value = '';
             loadSubjects();
@@ -187,3 +185,4 @@ async function confirmDeleteSubject(id)
         console.error('Error al borrar materia:', err.message);
     }
 }
+
