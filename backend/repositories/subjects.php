@@ -45,7 +45,7 @@ function getSubjectById($conn, $id)
     return $result->fetch_assoc(); 
 }
 
-function validateExistence($conn, $name) {
+function alreadyExistsSubject($conn, $name) {
     $sql = "SELECT * FROM subjects WHERE name = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s",$name);

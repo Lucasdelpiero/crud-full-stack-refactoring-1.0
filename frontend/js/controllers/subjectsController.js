@@ -9,7 +9,6 @@
 */
 
 import { subjectsAPI } from '../api/subjectsAPI.js';
-import { validateExistence } from './functions.js'
 //2.1
 //For pagination:
 let currentPage = 1;
@@ -39,18 +38,13 @@ function setupSubjectFormHandler()
         try 
         {
             if (subject.id) 
-            {   
                 await subjectsAPI.update(subject);
+            else {
+                const json = await subjectsAPI.create(subject);
+                if(json.message === "El nombre de la materia ya existe")
+                    alert(json.message);
             }
-            else
-            {
-                const existsSubject = await validateNameSubject(subject.name);
-                if(existsSubject)
-                    alert("El nombre de la materia ya existe en la base de datos");
-                else
-                    await subjectsAPI.create(subject);
-            }
-            
+
             form.reset();
             document.getElementById('subjectId').value = '';
             loadSubjects();
