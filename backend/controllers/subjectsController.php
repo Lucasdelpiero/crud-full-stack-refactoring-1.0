@@ -18,8 +18,16 @@ function handleGet($conn)
     if (isset($input['id'])) 
     {
         $subject = getSubjectById($conn, $input['id']);
-        echo json_encode($subject);
+        echo json_encode($subject);  
     } 
+
+    
+    else if(isset($input['row'])) {
+        $existe = ValidateExistence($conn, $input['row']);
+        echo json_encode($existe);
+    }
+
+    
     //2.1
     else if (isset($_GET['page']) && isset($_GET['limit'])) 
     {
