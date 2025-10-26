@@ -21,15 +21,10 @@ export function createAPI(moduleName, config = {})
             body: JSON.stringify(data)
         });
 
-
-        if (!res.ok) {
-        const msg = await res.text();
-        if (moduleName === 'studentsSubjects') {
-            throw new Error(msg);
-        }
-        throw new Error(`Error en ${method}`);
-       }
-
+        if (!res.ok)
+            throw new Error(`Error en ${method}`);
+        
+        return await res.json();;
     }
 
     return {

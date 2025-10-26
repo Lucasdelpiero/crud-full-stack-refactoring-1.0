@@ -76,18 +76,15 @@ function setupFormHandler()
             } 
             else 
             {
-
-                const students = await studentsAPI.fetchAll();
                 const subjects = await subjectsAPI.fetchAll();
-
-                const alumnoExiste = students.some(s => s.id === relation.student_id);
                 const materiaExiste = subjects.some(sub => sub.id === relation.subject_id);
-
-
-                if (!alumnoExiste || !materiaExiste)
-                   await studentsSubjectsAPI.create(relation);
+                if (!materiaExiste) {
+                   const json = await studentsSubjectsAPI.create(relation);
+                   if (json.message === "ya exsiste la asignacion")
+                      alert(json.message);
+                }
                 else {
-                    alert("ERROR ya existe la asignacion ");
+                    alert(" ya existe la asignacion ");
                     return ;
                 }
 

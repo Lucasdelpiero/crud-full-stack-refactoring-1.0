@@ -106,7 +106,7 @@ function removeStudentSubject($conn, $id)
 }
 
 
-function Exsiste($conn, $student_id, $subject_id) {
+function Existe($conn, $student_id, $subject_id) {
     $stmt = $conn->prepare("SELECT COUNT(*) AS total 
                             FROM students_subjects 
                             WHERE student_id = ? AND subject_id = ?");

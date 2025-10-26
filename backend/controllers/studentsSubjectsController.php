@@ -49,9 +49,9 @@ function handleGet($conn)
 function handlePost($conn) 
 {
     $input = json_decode(file_get_contents("php://input"), true);
-    if (Exsiste($conn ,$input['student_id'], $input['subject_id'])) {
-        http_response_code(400);
-        echo json_encode(["error" => "Error ya exsiste la asignacion"]);
+    if (Existe($conn ,$input['student_id'], $input['subject_id'])) {
+        http_response_code(200);
+        echo json_encode(["message" => "ya exsiste la asignacion"]);
     }
     else {
       $result = assignSubjectToStudent($conn, $input['student_id'], $input['subject_id'], $input['approved']);
