@@ -9,6 +9,8 @@
 */
 
 import { studentsAPI } from '../api/studentsAPI.js';
+import { studentsSubjectsAPI } from '../api/studentsSubjectsAPI.js';
+
 
 //2.0
 //For pagination:
@@ -181,7 +183,12 @@ async function confirmDelete(id)
   
     try 
     {
-        await studentsAPI.remove(id);
+ 
+            const json = await studentsAPI.remove(id);
+            if (json.message === "No se puede eliminar al estudiante por tener asignaciones") {
+              alert(json.message);
+              return ;
+            }
         loadStudents();
     } 
     catch (err) 
