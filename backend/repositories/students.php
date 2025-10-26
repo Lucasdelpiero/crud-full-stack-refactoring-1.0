@@ -83,4 +83,15 @@ function deleteStudent($conn, $id)
     //Se retorna fila afectadas para validar en controlador
     return ['deleted' => $stmt->affected_rows];
 }
+///////// MODIFIED b-S ///////////
+function ExistsEmail($conn, $email) {
+    $sql = "SELECT * FROM students WHERE email = ?";
+    $stmt = $conn->prepare($sql); //stmt significa statement
+    $stmt->bind_param("s",$email);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    return ($result->num_rows > 0);
+}
+//////////////////////////////////
 ?>
