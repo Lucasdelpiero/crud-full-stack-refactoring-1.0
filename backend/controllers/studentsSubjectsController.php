@@ -49,16 +49,21 @@ function handleGet($conn)
 function handlePost($conn) 
 {
     $input = json_decode(file_get_contents("php://input"), true);
-    
-    $result = assignSubjectToStudent($conn, $input['student_id'], $input['subject_id'], $input['approved']);
-    if ($result['inserted'] > 0) 
-    {
-        echo json_encode(["message" => "Asignación realizada"]);
-    } 
-    else 
-    {
-        http_response_code(500);
-        echo json_encode(["error" => "Error al asignar"]);
+    if (Existe($conn ,$input['student_id'], $input['subject_id'])) {
+        http_response_code(200);
+        echo json_encode(["message" => "ya exsiste la asignacion"]);
+    }
+    else {
+      $result = assignSubjectToStudent($conn, $input['student_id'], $input['subject_id'], $input['approved']);
+      if (isset($result['inserted']) && $result['inserted'] > 0) 
+      {
+          echo json_encode(["message" => "Asignación realizada"]);
+      } 
+      else 
+      {
+           http_response_code(500);
+          echo json_encode(["error" => "Error al asignar"]);
+      }
     }
 }
 
