@@ -80,21 +80,18 @@ function setupFormHandler()
 
                 const ExisteAsignacion = asignaciones.some(a =>
                      a.student_id === relation.student_id &&
-                     a.subject_id === relation.subject_id
+                     a.subject_id === relation.subject_id 
                     ); 
                 if (!ExisteAsignacion) {
                    const json = await studentsSubjectsAPI.create(relation);
-                   if (json.message === "ERROR ya exsiste la asignacion")
+                   if (json.message === " ya exsiste la asignacion")
                       alert(json.message);
                 }
-                else {
+                else 
                     alert(" ya existe la asignacion ");
-                    return ;
-                }
-
+            } 
             clearForm();
             loadRelations();
-            } 
         }   catch (err) {
                const errorMsg = await err.response?.text?.() || err.message || 'Error desconocido';
                alert(errorMsg);
