@@ -52,7 +52,7 @@ function alreadyExistsSubject($conn, $name) {
     $stmt->execute();
     $result = $stmt->get_result();
 
-    return ($result->num_rows > 0);
+    return $result->num_rows != 0;
 }
 
 function createSubject($conn, $name) 
