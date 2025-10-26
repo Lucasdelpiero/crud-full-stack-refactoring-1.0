@@ -41,8 +41,10 @@ function setupSubjectFormHandler()
                 await subjectsAPI.update(subject);
             else {
                 const json = await subjectsAPI.create(subject);
-                if(json.message === "El nombre de la materia ya existe")
+                if(json.message === "El nombre de la materia ya existe") {
                     alert(json.message);
+                    return;
+                }
             }
 
             form.reset();
