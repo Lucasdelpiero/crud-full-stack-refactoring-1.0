@@ -20,7 +20,6 @@ export function createAPI(moduleName, config = {})
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data)
         });
-
         if (!res.ok)
             throw new Error(`Error en ${method}`);
         

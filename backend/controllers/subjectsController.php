@@ -18,8 +18,9 @@ function handleGet($conn)
     if (isset($input['id'])) 
     {
         $subject = getSubjectById($conn, $input['id']);
-        echo json_encode($subject);
+        echo json_encode($subject);  
     } 
+    
     //2.1
     else if (isset($_GET['page']) && isset($_GET['limit'])) 
     {
@@ -46,7 +47,14 @@ function handlePost($conn)
 {
     $input = json_decode(file_get_contents("php://input"), true);
 
+    if(alreadyExistsSubject($conn, $input['name'])) {
+        http_response_code(200);
+        echo json_encode(["message" => "El nombre de la materia ya existe"]);
+        return;
+    }
+
     $result = createSubject($conn, $input['name']);
+
     if ($result['inserted'] > 0) 
     {
         echo json_encode(["message" => "Materia creada correctamente"]);
