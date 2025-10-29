@@ -39,13 +39,8 @@ function setupSubjectFormHandler()
         {
             if (subject.id) 
                 await subjectsAPI.update(subject);
-            else {
-                const json = await subjectsAPI.create(subject);
-                if(json.message === "El nombre de la materia ya existe") {
-                    alert(json.message);
-                    return;
-                }
-            }
+            else
+                await subjectsAPI.create(subject);
 
             form.reset();
             document.getElementById('subjectId').value = '';
@@ -53,6 +48,8 @@ function setupSubjectFormHandler()
         }
         catch (err)
         {
+            if(err.message === "El nombre de la materia ya existe")
+                alert(err.message);
             console.error(err.message);
         }
   });
