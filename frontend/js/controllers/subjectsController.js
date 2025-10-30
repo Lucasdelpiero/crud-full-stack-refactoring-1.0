@@ -48,8 +48,6 @@ function setupSubjectFormHandler()
         }
         catch (err)
         {
-            if(err.message === "El nombre de la materia ya existe")
-                alert(err.message);
             console.error(err.message);
         }
   });
