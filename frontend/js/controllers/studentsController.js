@@ -41,11 +41,8 @@ function setupFormHandler()
                 await studentsAPI.update(student);
             } 
             ///////////////// MODIFIED b-S /////////////////
-             else {
-                const json = await studentsAPI.create(student);
-                if(json.message === "El email ingresado ya existe")
-                    alert(json.message);
-            }
+             else 
+                await studentsAPI.create(student);
             ////////////////////////////////////////////////
             clearForm();
             loadStudents();
@@ -187,11 +184,7 @@ async function confirmDelete(id)
     try 
     {
  
-            const json = await studentsAPI.remove(id);
-            if (json.message === "No se puede eliminar al estudiante por tener asignaciones") {
-              alert(json.message);
-              return ;
-            }
+        await studentsAPI.remove(id);
         loadStudents();
     } 
     catch (err) 
@@ -199,4 +192,3 @@ async function confirmDelete(id)
         console.error('Error al borrar:', err.message);
     }
 }
-  

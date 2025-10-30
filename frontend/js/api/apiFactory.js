@@ -20,9 +20,14 @@ export function createAPI(moduleName, config = {})
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data)
         });
-        if (!res.ok)
+        if (!res.ok) {
+            if ( res.status === 400 || res.status === 405) {
+                const body = await res.json().catch(() => ({}));
+                alert(body.message);
+                return ;
+            }
             throw new Error(`Error en ${method}`);
-        
+        }
         return await res.json();;
     }
 
@@ -56,3 +61,4 @@ export function createAPI(moduleName, config = {})
         }
     };
 }
+
