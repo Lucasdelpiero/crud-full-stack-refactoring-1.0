@@ -49,6 +49,14 @@ function handlePost($conn)
 {
     $input = json_decode(file_get_contents("php://input"), true);
 
+    ///////// MODIFIED b-S ///////////
+    if(ExistsEmail($conn, $input['email'])) {
+        http_response_code(200);
+        echo json_encode(["message" => "El email ingresado ya existe"]);
+        return;
+    }
+    //////////////////////////////////
+    
     $result = createStudent($conn, $input['fullname'], $input['email'], $input['age']);
     if ($result['inserted'] > 0) 
     {

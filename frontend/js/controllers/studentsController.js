@@ -40,10 +40,13 @@ function setupFormHandler()
             {
                 await studentsAPI.update(student);
             } 
-            else 
-            {
-                await studentsAPI.create(student);
+            ///////////////// MODIFIED b-S /////////////////
+             else {
+                const json = await studentsAPI.create(student);
+                if(json.message === "El email ingresado ya existe")
+                    alert(json.message);
             }
+            ////////////////////////////////////////////////
             clearForm();
             loadStudents();
         }
