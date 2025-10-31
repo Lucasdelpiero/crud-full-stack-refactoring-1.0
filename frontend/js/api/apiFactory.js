@@ -20,10 +20,11 @@ export function createAPI(moduleName, config = {})
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data)
         });
+        const json = await res.json();
         if (!res.ok)
-            throw new Error(`Error en ${method}`);
+            throw new Error(json.error || `Error en ${method}`);
         
-        return await res.json();;
+        return json;
     }
 
     return {

@@ -31,7 +31,7 @@ function getTotalSubjects($conn)
 {
     $sql = "SELECT COUNT(*) AS total FROM subjects";
     $result = $conn->query($sql);
-    return $result->fetch_assoc()['total']; //fetch_assoc accede a la primera fila de la tabla resultante, accede al campo 'total', asi el return devuelve el campo total 
+    return $result->fetch_assoc()['total'];
 }
 
 function getSubjectById($conn, $id) 
