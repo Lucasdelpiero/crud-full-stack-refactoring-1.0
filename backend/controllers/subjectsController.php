@@ -49,7 +49,7 @@ function handlePost($conn)
 
     if(alreadyExistsSubject($conn, $input['name'])) {
         http_response_code(400);
-        echo json_encode(["message" => "El nombre de la materia ya existe"]);
+        echo json_encode(["error" => "El nombre de la materia ya existe"]);
         return;
     }
 
