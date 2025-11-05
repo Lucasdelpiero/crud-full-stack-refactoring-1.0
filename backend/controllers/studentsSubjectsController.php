@@ -49,7 +49,7 @@ function handleGet($conn)
 function handlePost($conn) 
 {
     $input = json_decode(file_get_contents("php://input"), true);
-    if (Existe($conn ,$input['student_id'], $input['subject_id'])) {
+    if (ExisteAsignacion($conn ,$input['student_id'], $input['subject_id'])) {
         http_response_code(200);
         echo json_encode(["message" => "ya exsiste la asignacion"]);
     }
