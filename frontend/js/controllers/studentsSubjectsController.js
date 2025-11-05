@@ -75,21 +75,7 @@ function setupFormHandler()
                 await studentsSubjectsAPI.update(relation);
             } 
             else 
-            {
-                const asignaciones = await studentsSubjectsAPI.fetchAll();
-
-                const ExisteAsignacion = asignaciones.some(a =>
-                     a.student_id === relation.student_id &&
-                     a.subject_id === relation.subject_id 
-                    ); 
-                if (!ExisteAsignacion) {
-                   const json = await studentsSubjectsAPI.create(relation);
-                   if (json.message === " ya exsiste la asignacion")
-                      alert(json.message);
-                }
-                else 
-                    alert(" ya existe la asignacion ");
-            } 
+              await studentsSubjectsAPI.create(relation);
             clearForm();
             loadRelations();
         }   catch (err) {

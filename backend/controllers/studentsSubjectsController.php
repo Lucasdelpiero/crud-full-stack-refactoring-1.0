@@ -50,8 +50,8 @@ function handlePost($conn)
 {
     $input = json_decode(file_get_contents("php://input"), true);
     if (ExisteAsignacion($conn ,$input['student_id'], $input['subject_id'])) {
-        http_response_code(200);
-        echo json_encode(["message" => "ya exsiste la asignacion"]);
+        http_response_code(400);
+        echo json_encode(["error" => "ya exsiste la asignacion"]);
     }
     else {
       $result = assignSubjectToStudent($conn, $input['student_id'], $input['subject_id'], $input['approved']);
