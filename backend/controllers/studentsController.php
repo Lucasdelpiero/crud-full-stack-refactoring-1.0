@@ -51,8 +51,8 @@ function handlePost($conn)
 
     ///////// MODIFIED b-S ///////////
     if(ExistsEmail($conn, $input['email'])) {
-        http_response_code(200);
-        echo json_encode(["message" => "El email ingresado ya existe"]);
+        http_response_code(400);
+        echo json_encode(["error" => "El email ingresado ya existe"]);
         return;
     }
     //////////////////////////////////
@@ -101,8 +101,8 @@ function handleDelete($conn)
        }
     }
     else {
-        http_response_code(200);
-        echo json_encode(["message" => "No se puede eliminar al estudiante por tener asignaciones"]);
+        http_response_code(400);
+        echo json_encode(["error" => "No se puede eliminar al estudiante por tener asignaciones"]);
     }
         
 }
