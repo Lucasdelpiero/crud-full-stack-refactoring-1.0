@@ -180,6 +180,9 @@ async function confirmDeleteSubject(id)
     }
     catch (err)
     {
+        //alert('No se puede borrar materia asignada');
+        const errorMsg = await err.response?.text?.() || err.message || 'Error desconocido';
+        alert(errorMsg);
         console.error('Error al borrar materia:', err.message);
     }
 }

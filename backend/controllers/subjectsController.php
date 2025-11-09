@@ -10,6 +10,7 @@
 */
 
 require_once("./repositories/subjects.php");
+require_once("./repositories/studentsSubjects.php");
 
 function handleGet($conn) 
 {
@@ -86,15 +87,22 @@ function handleDelete($conn)
 {
     $input = json_decode(file_get_contents("php://input"), true);
     
-    $result = deleteSubject($conn, $input['id']);
-    if ($result['deleted'] > 0) 
-    {
-        echo json_encode(["message" => "Materia eliminada correctamente"]);
-    } 
-    else 
-    {
-        http_response_code(500);
-        echo json_encode(["error" => "No se pudo eliminar"]);
+    if (!materiaEstaAsignada($conn, $input['id'])) {
+        $result = deleteSubject($conn, $input['id']);
+
+        if ($result['deleted'] > 0) 
+        {
+            echo json_encode(["message" => "Materia eliminada correctamente"]);
+        } 
+        else 
+        {
+            http_response_code(500);
+            echo json_encode(["error" => "No se pudo eliminar"]);
+        }
+    } else {
+        http_response_code(400);
+        echo json_encode(["error" => "No se puede borrar materias asignadas"]);
     }
+    
 }
 ?>

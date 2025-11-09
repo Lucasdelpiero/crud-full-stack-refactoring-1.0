@@ -105,6 +105,16 @@ function removeStudentSubject($conn, $id)
     return ['deleted' => $stmt->affected_rows];
 }
 
+function materiaEstaAsignada($conn ,$subject_id){
+    $stmt = $conn->prepare("SELECT COUNT(*) AS total
+                            FROM students_subjects
+                            WHERE subject_id = ?");
+    $stmt->bind_param("i", $subject_id);
+    $stmt->execute();
+    $result = $stmt->get_result()->fetch_assoc();
+
+    return $result['total'] != 0;
+}
 
 function ExisteAsignacion($conn, $student_id, $subject_id) {
     $stmt = $conn->prepare("SELECT COUNT(*) AS total 
